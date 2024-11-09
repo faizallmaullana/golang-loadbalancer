@@ -1,5 +1,5 @@
 install: build
-	mv goload /usr/lcoal/bin
+	mv goload /usr/local/bin
 
 build: 
 	go build -o goload .

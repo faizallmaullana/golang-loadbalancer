@@ -13,7 +13,7 @@ import (
 )
 
 // Start the server on the specified port.
-func startServer(wg *sync.WaitGroup) {
+func startServer(wg *sync.WaitGroup, port int) {
 	defer wg.Done()
 
 	// Get mode from environment variables
@@ -22,7 +22,6 @@ func startServer(wg *sync.WaitGroup) {
 	r := gin.New()
 
 	rand.Seed(time.Now().UnixNano())
-	port := rand.Intn(10000) + 1000
 	address := fmt.Sprintf("http://localhost:%d", port)
 
 	mu.Lock()
@@ -34,8 +33,6 @@ func startServer(wg *sync.WaitGroup) {
 	r.NoRoute(func(c *gin.Context) {
 		c.File("./dist/index.html")
 	})
-
-	// Set up middleware and routes
 
 	// Start the server
 	if err := r.Run(fmt.Sprintf(":%d", port)); err != nil {
