@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
-	"strings"
 	"sync"
 )
 
@@ -15,7 +14,6 @@ var stringServers []int
 var start bool
 
 func main() {
-	// setup argument
 	ArgumentHandler()
 }
 
@@ -31,30 +29,12 @@ func ArgumentHandler() {
 			case "-num":
 
 				numServer, err := strconv.Atoi(os.Args[i+2])
+				fmt.Println(numServer)
 				if err != nil {
-					fmt.Println("Please use num")
+					fmt.Println("Please use valid integer number")
 					return
 				}
 				numServers = numServer
-
-			case "-ports":
-				values := os.Args[i+2]
-
-				parts := strings.Split(values, ",")
-				for _, part := range parts {
-					num, err := strconv.Atoi(part)
-					if err != nil {
-						// Handle error if conversion fails
-						fmt.Println("Error converting string to int:", err)
-						return
-					}
-					fmt.Println(num)
-					stringServers = append(stringServers, num)
-					fmt.Println(stringServers)
-				}
-
-			case "-s":
-				start = true
 
 			default:
 				fmt.Println("Numserver = ", numServers)
@@ -77,12 +57,11 @@ func Run() {
 	var wg sync.WaitGroup
 
 	if numServers > 0 {
+		fmt.Println("masuk num")
 		for i := 0; i < numServers; i++ {
 			wg.Add(1)
 			port := rand.Intn(10000) + 1000
-			if start {
-				go startServer(&wg, port)
-			}
+			go startServer(&wg, port)
 		}
 	} else if numServers == 0 {
 		for i, _ := range stringServers[0:] {

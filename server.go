@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
 	"sync"
 	"time"
 
@@ -17,8 +16,8 @@ func startServer(wg *sync.WaitGroup, port int) {
 	defer wg.Done()
 
 	// Get mode from environment variables
-	mode := os.Getenv("MODE")
-	gin.SetMode(mode)
+	// mode := os.Getenv("MODE")
+	// gin.SetMode(mode)
 	r := gin.New()
 
 	rand.Seed(time.Now().UnixNano())
